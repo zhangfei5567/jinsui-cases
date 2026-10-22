@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Aiwa bot 智能客服 · 金穗新能源案例</title>
-  <meta name="description" content="金穗新能源在官网挂上了艾瓦的 Aiwa bot。全天自动回答，留下想合作的客户，每个月还有一份效果报告。" />
+  <meta name="description" content="金穗新能源在官网挂上了艾瓦的 Aiwa bot。2026 年第三季度，线上被问 192 次，留下能跟的 57 条，比 4 名业务员当季坐下来谈的 45 家增加 26.7%。" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -77,6 +77,76 @@
     .band b.word { font-family: var(--sans); font-size: 40px; font-weight: 700; letter-spacing: -0.03em; }
     .band span { display: block; margin-top: 8px; color: rgba(246, 241, 230, 0.75); font-size: 14px; }
 
+    .model { padding: 52px 0 6px; }
+    .lanes { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .lane { border-radius: 18px; padding: 20px 22px 8px; }
+    .lane.off { background: var(--card); border: 1px solid var(--line); color: var(--ink); }
+    .lane.on { background: #d8f0e3; border: 1px solid rgba(16, 92, 60, 0.38); color: #124a34; }
+    .lane h3 {
+      margin: 0;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(20, 33, 27, 0.12);
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+    .lane.on h3 { border-bottom-color: rgba(18, 74, 52, 0.16); }
+    .metric {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+      margin: 0;
+      padding: 15px 0;
+      border-bottom: 1px solid rgba(20, 33, 27, 0.1);
+    }
+    .lane.on .metric { border-bottom-color: rgba(18, 74, 52, 0.14); }
+    .metric:last-child { border-bottom: 0; }
+    .metric span { font-size: 15px; }
+    .lane.off .metric span { color: var(--muted); }
+    .metric b {
+      font-family: var(--num);
+      font-size: 42px;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+    .metric b small {
+      font-family: var(--sans);
+      font-size: 16px;
+      font-weight: 700;
+      margin-left: 4px;
+      letter-spacing: 0;
+    }
+    .scale { margin-top: 28px; }
+    .scale .hint { margin: 0 0 14px; color: var(--muted); font-size: 13px; }
+    .srow {
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr) 76px;
+      gap: 12px;
+      align-items: center;
+      margin: 0 0 12px;
+    }
+    .srow em { font-style: normal; font-weight: 700; font-size: 15px; }
+    .srow .track { height: 28px; }
+    .srow .track i {
+      display: block;
+      height: 100%;
+      border-radius: 6px;
+      transform-origin: left center;
+      animation: bar-in 0.85s cubic-bezier(.2, .7, .2, 1) both;
+    }
+    .srow .track i.off { width: 78.95%; background: #b7aa96; }
+    .srow .track i.on { width: 100%; background: #1c8a58; animation-delay: 0.1s; }
+    .srow strong { font-size: 15px; font-weight: 700; text-align: right; }
+    .punch { margin: 10px 0 0; font-size: 20px; font-weight: 700; letter-spacing: 0; }
+    .punch em { font-family: var(--num); font-style: normal; font-size: 1.45em; font-weight: 400; color: #146b42; letter-spacing: -0.03em; }
+    .basis { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+    @keyframes bar-in { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+    @media (prefers-reduced-motion: reduce) {
+      .srow .track i { animation: none; }
+    }
+
     section { padding: 64px 0 10px; }
     h2 { margin: 0 0 8px; font-size: clamp(28px, 4vw, 40px); letter-spacing: -0.03em; line-height: 1.2; }
     .sub { margin: 0 0 22px; color: var(--muted); max-width: 38em; }
@@ -113,7 +183,8 @@
     footer { padding: 0 0 36px; color: var(--muted); font-size: 12px; line-height: 1.7; }
 
     @media (max-width: 760px) {
-      .band, .proof, .steps, .profile, .pair { grid-template-columns: 1fr; }
+      .band, .proof, .steps, .profile, .pair, .lanes { grid-template-columns: 1fr; }
+      .metric b { font-size: 36px; }
       .band div + div { border-left: 0; border-top: 1px solid rgba(246, 241, 230, 0.14); }
       .shot img { height: 220px; }
     }
@@ -149,9 +220,43 @@
       <h2 class="result-title">- 合作成果 -</h2>
       <div class="band" aria-label="合作成果">
         <div><b class="word">已上线</b><span>官网右下角叫穗小能，现在能问</span></div>
-        <div><b>7×24</b><span>小时自动回答，夜里和周末也在</span></div>
+        <div><b>720</b><span>小时，客服每个月在线（30 天 × 24 小时）</span></div>
         <div><b class="word">每月</b><span>一份报告，看它答得怎么样</span></div>
       </div>
+
+      <section class="model" aria-labelledby="model-title">
+        <p class="kicker">2026 年第三季度获客</p>
+        <h2 id="model-title">原来一个季度靠业务跑。<br />现在线上增加 26.7%。</h2>
+        <p class="sub">官网和穗小能做上线之后，拿第三季度来算这笔客资。4 个业务员上门，对上 0 个在线客服。比的是能接着跟的客户。</p>
+        <div class="lanes">
+          <article class="lane off">
+            <h3>线下 · 业务员跑</h3>
+            <div class="metric"><span>业务员</span><b>4<small>人</small></b></div>
+            <div class="metric"><span>一个季度上门</span><b>144<small>家</small></b></div>
+            <div class="metric"><span>真正坐下来谈</span><b>45<small>家</small></b></div>
+          </article>
+          <article class="lane on">
+            <h3>线上 · 官网 + 穗小能</h3>
+            <div class="metric"><span>人工客服在线</span><b>0<small>人</small></b></div>
+            <div class="metric"><span>一个季度被问</span><b>192<small>次</small></b></div>
+            <div class="metric"><span>留下能跟的</span><b>57<small>条</small></b></div>
+          </article>
+        </div>
+        <div class="scale">
+          <p class="hint">能接着跟的客户，长度按条数等比</p>
+          <div class="srow">
+            <em>线下</em>
+            <div class="track" role="img" aria-label="线下 45 家"><i class="off"></i></div>
+            <strong>45 家</strong>
+          </div>
+          <div class="srow">
+            <em>线上</em>
+            <div class="track" role="img" aria-label="线上 57 条"><i class="on"></i></div>
+            <strong>57 条</strong>
+          </div>
+        </div>
+        <p class="punch">同样一个季度，能接着跟的增加率是 <em>26.7%</em>。</p>
+      </section>
     </div>
   </header>
 
@@ -253,7 +358,7 @@
     </div>
   </main>
   <footer class="wrap">
-    客户是广州金穗新能源有限公司。Aiwa bot 由广州艾瓦智能科技有限公司提供，上线后在官网以「穗小能」接待。上面七项是这项服务的内容。
+    客户是广州金穗新能源有限公司。Aiwa bot 由广州艾瓦智能科技有限公司提供，上线后在官网以「穗小能」接待。720 小时按服务约定的 7×24 计算，一个月按 30 天。2026 年第三季度获客由月数据 × 3：线下 4 名业务员上门 144 家、坐下来谈 45 家；线上人工客服 0 人、被问 192 次、留下能跟的 57 条。增加率按 (57−45)÷45 = 26.7% 计算。上门按每人每月约 12 家，被问按每天约 2 次。
   </footer>
 </body>
 </html>
