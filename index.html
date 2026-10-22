@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aiwa bot 智能客服 · 金穗新能源案例</title>
+  <meta name="description" content="金穗新能源在官网挂上了艾瓦的 Aiwa bot。全天自动回答，留下想合作的客户，每个月还有一份效果报告。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #14211b;
+      --muted: #5c6b62;
+      --forest: #10281f;
+      --gold: #c6a15a;
+      --paper: #f4f0e6;
+      --card: #fffdf8;
+      --line: rgba(20, 33, 27, 0.12);
+      --sans: "Noto Sans SC", "PingFang SC", sans-serif;
+      --num: "Instrument Serif", serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 17px; line-height: 1.7; }
+    a { color: inherit; }
+    img { max-width: 100%; display: block; }
+    .wrap { width: min(980px, calc(100% - 40px)); margin: 0 auto; }
+    .nav { display: flex; justify-content: space-between; align-items: center; padding: 22px 0; font-size: 13px; letter-spacing: 0.08em; }
+    .brand { display: flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 700; }
+    .brand i { width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center; background: var(--forest); color: var(--gold); font-style: normal; letter-spacing: 0; }
+    .nav a.quiet { color: var(--muted); text-decoration: none; letter-spacing: 0; }
+
+    .kicker { margin: 0 0 12px; color: #8a6a32; font-size: 13px; letter-spacing: 0.16em; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(36px, 6vw, 60px); line-height: 1.12; letter-spacing: -0.03em; }
+    .lede { margin: 16px 0 0; max-width: 38em; color: var(--muted); font-size: 18px; }
+    .who { display: flex; align-items: center; gap: 12px; margin-top: 26px; }
+    .who img { width: 48px; height: 48px; }
+    .who strong { display: block; }
+    .who span { color: var(--muted); font-size: 14px; }
+
+    .profile {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: 148px 1fr;
+      gap: 16px;
+      align-items: center;
+      padding: 16px 18px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+    }
+    .profile img { width: 72px; height: 72px; margin: 0 auto; }
+    .badge {
+      display: inline-block;
+      margin: 0 0 6px;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: #143a72;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+    .profile p { margin: 0; color: var(--muted); font-size: 15px; }
+
+    .pair { margin-top: 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .box { padding: 20px 18px 16px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; }
+    .box h2 { margin: 0 0 8px; font-size: 18px; letter-spacing: 0; }
+    .box p { margin: 0; color: var(--muted); font-size: 15px; }
+    .box strong { color: var(--ink); }
+
+    .result-title { margin: 22px 0 0; text-align: center; font-size: 22px; letter-spacing: 0.08em; }
+    .band { margin-top: 12px; background: var(--forest); color: #f6f1e6; border-radius: 22px; display: grid; grid-template-columns: repeat(3, 1fr); }
+    .band div { padding: 26px 22px 22px; }
+    .band div + div { border-left: 1px solid rgba(246, 241, 230, 0.14); }
+    .band b { display: block; font-family: var(--num); font-size: 54px; font-weight: 400; line-height: 1; }
+    .band b.word { font-family: var(--sans); font-size: 40px; font-weight: 700; letter-spacing: -0.03em; }
+    .band span { display: block; margin-top: 8px; color: rgba(246, 241, 230, 0.75); font-size: 14px; }
+
+    section { padding: 64px 0 10px; }
+    h2 { margin: 0 0 8px; font-size: clamp(28px, 4vw, 40px); letter-spacing: -0.03em; line-height: 1.2; }
+    .sub { margin: 0 0 22px; color: var(--muted); max-width: 38em; }
+
+    .jobs { display: grid; gap: 12px; }
+    .job { display: grid; grid-template-columns: 52px 1fr; gap: 8px; padding: 18px 18px 16px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; }
+    .job em { font-family: var(--num); font-style: normal; font-size: 28px; color: #8a6a32; line-height: 1; }
+    .job h3 { margin: 0 0 4px; font-size: 18px; }
+    .job p { margin: 0; color: var(--muted); }
+
+    .proof { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; align-items: center; }
+    .frame { background: #fff; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: 0 16px 40px rgba(16, 40, 31, 0.08); }
+    .chrome { display: flex; gap: 6px; align-items: center; padding: 10px 12px; background: #f7f4ee; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+    .chrome i { width: 8px; height: 8px; border-radius: 50%; background: #e4d3b0; }
+    .shot { position: relative; }
+    .shot img { width: 100%; height: 340px; object-fit: cover; object-position: top left; }
+    .tag {
+      position: absolute; right: 14px; bottom: 14px;
+      background: #0b5cab; color: #fff; border-radius: 999px;
+      padding: 8px 12px; font-size: 13px; font-weight: 700;
+    }
+    .try { display: inline-block; margin-top: 16px; background: var(--forest); color: #f6f1e6; text-decoration: none; border-radius: 999px; padding: 12px 18px; font-weight: 700; }
+    .try:hover { background: #1a4334; }
+
+    .steps { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .step { padding: 18px; border-radius: 16px; background: rgba(16, 40, 31, 0.04); }
+    .step b { display: block; margin-bottom: 4px; }
+    .step p { margin: 0; color: var(--muted); }
+
+    .end { margin: 56px 0 28px; padding: 32px; border-radius: 22px; background: var(--forest); color: #f6f1e6; }
+    .end h2 { color: #f6f1e6; }
+    .end p { margin: 0 0 16px; color: rgba(246, 241, 230, 0.8); max-width: 36em; }
+    .end a { display: inline-block; background: var(--gold); color: #1c2416; text-decoration: none; border-radius: 999px; padding: 12px 18px; font-weight: 700; }
+    footer { padding: 0 0 36px; color: var(--muted); font-size: 12px; line-height: 1.7; }
+
+    @media (max-width: 760px) {
+      .band, .proof, .steps, .profile, .pair { grid-template-columns: 1fr; }
+      .band div + div { border-left: 0; border-top: 1px solid rgba(246, 241, 230, 0.14); }
+      .shot img { height: 220px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <div class="nav">
+      <a class="brand" href="#top"><i>瓦</i>艾瓦智能</a>
+      <a class="quiet" href="https://www.jinsui.top/" target="_blank" rel="noopener">先去官网试一次</a>
+    </div>
+    <div id="top">
+      <p class="kicker">AIWA BOT · 客户案例</p>
+      <h1>晚上也有人答。<br />想合作的人，留得下来。</h1>
+      <p class="lede">金穗新能源是做工商业光伏和储能的。客户经常先在网上问：要不要自己出钱、项目在哪、怎么合作。艾瓦给它装了 Aiwa bot，挂在官网上，名字叫「穗小能」。常见问题当场回答，有意向就记下联系方式。</p>
+      <article class="profile">
+        <img src="covers/logo.png" alt="金穗新能源" />
+        <div>
+          <p class="badge">金穗新能源</p>
+          <p>广州金穗新能源成立于 2022 年，做工商业光伏和储能的投资运营，客户是工厂、园区和投资方。人们来之前，会先在网上问要不要出资、项目在哪、怎么合作。</p>
+        </div>
+      </article>
+      <div class="pair">
+        <article class="box">
+          <h2>客户挑战</h2>
+          <p><strong>下班没人接。</strong>这些话白天靠销售一个个回，下班和周末就空着。想合作的人、来投诉的人混在一起，销售的时间花在重复回答上。</p>
+        </article>
+        <article class="box">
+          <h2>解决方案</h2>
+          <p><strong>全天客服，顺手把客户留下。</strong>Aiwa bot 接到官网和企业微信。常见问题自动答，有意向就记下联系方式并可以预约，投诉走进工单，提到产品或活动就把介绍推过去。</p>
+        </article>
+      </div>
+      <h2 class="result-title">- 合作成果 -</h2>
+      <div class="band" aria-label="合作成果">
+        <div><b class="word">已上线</b><span>官网右下角叫穗小能，现在能问</span></div>
+        <div><b>7×24</b><span>小时自动回答，夜里和周末也在</span></div>
+        <div><b class="word">每月</b><span>一份报告，看它答得怎么样</span></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section>
+      <p class="kicker">买到的是这些</p>
+      <h2>一个客服，把这七件事做完。</h2>
+      <p class="sub">不用再招一个只负责回复的人。重复的问题交给它，真有意向、真有投诉的，再交给你们的人。</p>
+      <div class="jobs">
+        <article class="job">
+          <em>1</em>
+          <div>
+            <h3>挂到你已经有的地方</h3>
+            <p>官网、企业微信都能接。客户不用另外下载软件，在原来咨询的地方就能问。</p>
+          </div>
+        </article>
+        <article class="job">
+          <em>2</em>
+          <div>
+            <h3>全天自动回答</h3>
+            <p>先把你们的常见问题写成知识库。同样的话，不用人工再说一遍。</p>
+          </div>
+        </article>
+        <article class="job">
+          <em>3</em>
+          <div>
+            <h3>把想合作的人留下来</h3>
+            <p>问清需求，记下联系方式，可以帮着预约。第二天销售打开就能跟。</p>
+          </div>
+        </article>
+        <article class="job">
+          <em>4</em>
+          <div>
+            <h3>投诉和建议分开走</h3>
+            <p>客户是来问产品，还是在投诉，会分开。该进工单的进工单，该交给人的交给人。</p>
+          </div>
+        </article>
+        <article class="job">
+          <em>5</em>
+          <div>
+            <h3>提到产品，就把介绍发出去</h3>
+            <p>对方说到优惠、活动或某项产品，客服按关键词把对应内容推过去。</p>
+          </div>
+        </article>
+        <article class="job">
+          <em>6</em>
+          <div>
+            <h3>话术按你的生意改</h3>
+            <p>上线之后继续改知识库，把回答改准，改得像你们公司自己会说的话。</p>
+          </div>
+        </article>
+        <article class="job">
+          <em>7</em>
+          <div>
+            <h3>每个月一份成绩单</h3>
+            <p>艾瓦每月给一份运营报告，看这个客服的回答效果，方便接着改。</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="proof">
+        <div>
+          <p class="kicker">金穗已经在用</p>
+          <h2>打开官网，右下角就是它。</h2>
+          <p class="sub">金穗的智能客服叫穗小能，就挂在 jinsui.top。你现在点进去，问一句「怎么合作」，看到的就是这个客服在接待。</p>
+          <a class="try" href="https://www.jinsui.top/" target="_blank" rel="noopener">去金穗官网试一次</a>
+        </div>
+        <a class="frame" href="https://www.jinsui.top/" target="_blank" rel="noopener">
+          <div class="chrome"><i></i><i></i><i></i><span>jinsui.top</span></div>
+          <div class="shot">
+            <img src="shots/home.jpg" alt="金穗新能源官网，右下角是穗小能" />
+            <span class="tag">右下角 · 穗小能</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <p class="kicker">交给你的时间</p>
+      <h2>60 天装好，之后每个月还在改。</h2>
+      <div class="steps">
+        <article class="step">
+          <b>合作后 60 天内</b>
+          <p>客服接到官网和企业微信，常见问题配好，可以正式回答客户。</p>
+        </article>
+        <article class="step">
+          <b>剩下的服务期</b>
+          <p>继续改词条、改话术，让回答更准。每个月出一份效能报告。</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="end">
+      <h2>你的官网，也可以这样接待。</h2>
+      <p>广州艾瓦智能科技有限公司。Aiwa bot 负责全天回答、留下客户、把投诉分开，并按月告诉你它答得怎么样。</p>
+      <a href="https://www.jinsui.top/" target="_blank" rel="noopener">先看金穗的穗小能怎么答</a>
+    </div>
+  </main>
+  <footer class="wrap">
+    客户是广州金穗新能源有限公司。Aiwa bot 由广州艾瓦智能科技有限公司提供，上线后在官网以「穗小能」接待。上面七项是这项服务的内容。
+  </footer>
+</body>
+</html>
